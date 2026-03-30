@@ -1,0 +1,479 @@
+Legal Intake Analytics Pipeline
+Technical Reference
+
+Purpose
+This file is a study guide for the project. Use it later when you want to remember:
+- what the project does
+- why each file exists
+- how the data flows through the project
+- what each output means
+- how to explain the project in an interview
+
+==================================================
+1. Project Summary
+==================================================
+
+This project simulates a business-facing AI/ML workflow for a law firm.
+
+The project has 2 main layers:
+
+1. Analytics pipeline
+   This layer loads raw data, cleans it, creates useful features, builds summaries, and stores results in SQLite.
+
+2. Machine learning baseline
+   This layer trains a logistic regression model to predict whether a matter will be assigned late.
+
+This is useful for learning because it covers:
+- Python
+- pandas
+- SQL / SQLite
+- feature engineering
+- machine learning workflow
+- stakeholder reporting
+- documentation
+
+==================================================
+2. Main Business Problem
+==================================================
+
+Imagine a law firm receives many intake requests from different teams.
+
+Problems:
+- the data can be messy
+- labels may be inconsistent
+- some values may be missing
+- leadership wants fast reporting
+- operations may want to predict delays
+
+This project solves that by:
+- standardizing the data
+- creating reporting outputs
+- saving clean tables to SQLite
+- training a simple forecasting model
+
+==================================================
+3. Recommended Study Order
+==================================================
+
+Study the project in this order:
+
+1. Read data/raw/legal_intake_sample.csv
+2. Read project1.py
+3. Run project1.py
+4. Inspect outputs/cleaned_legal_intake.csv
+5. Inspect outputs/practice_area_summary.csv
+6. Inspect outputs/executive_summary.txt
+7. Read sql/report_queries.sql
+8. Read train_assignment_delay_model.py
+9. Run train_assignment_delay_model.py
+10. Inspect outputs/assignment_delay_model_metrics.json
+11. Inspect outputs/assignment_delay_predictions.csv
+12. Inspect outputs/assignment_delay_feature_weights.csv
+
+==================================================
+4. File-by-File Reference
+==================================================
+
+README.md
+- Main project overview.
+- Explains what the repo is for.
+- Lists skills demonstrated.
+- Shows how to run the project.
+- Good file to show employers first.
+
+project1.py
+- Core analytics pipeline.
+- Loads the raw CSV file.
+- Cleans and standardizes the data.
+- Creates engineered features.
+- Builds summary tables.
+- Saves outputs to CSV, JSON, text, and SQLite.
+
+train_assignment_delay_model.py
+- Machine learning script.
+- Reuses the cleaned dataset logic from project1.py.
+- Selects input features for modeling.
+- Splits data into train and test sets.
+- Builds a preprocessing + logistic regression pipeline.
+- Saves model metrics, predictions, feature weights, and a serialized model file.
+
+requirements.txt
+- Lists Python packages needed for the project.
+- Currently includes pandas and scikit-learn.
+
+.gitignore
+- Prevents local environment files and generated artifacts from cluttering the repo.
+- Helps keep GitHub clean and professional.
+
+Tech_Ref.txt
+- This study file.
+- Use it as your quick technical reference when reviewing the project later.
+
+data/raw/legal_intake_sample.csv
+- Sample raw dataset.
+- Simulates legal intake records.
+- Includes structured fields and a text summary field.
+- This is the starting point for the whole project.
+
+docs/8_week_job_ready_plan.md
+- Learning roadmap tied to the target AI/ML job.
+- Good for planning your study schedule.
+
+docs/employer_pitch.md
+- Notes for resume bullets and interview framing.
+- Helps you describe the project like real experience.
+
+docs/project_walkthrough.md
+- Guided explanation of how the project works.
+- Best file to read before interviews or when you forget the project flow.
+
+sql/report_queries.sql
+- SQL examples for reporting against the SQLite database.
+- Shows that the project supports both Python analysis and SQL analysis.
+
+outputs/cleaned_legal_intake.csv
+- Cleaned version of the raw dataset.
+- Shows what the data looks like after preprocessing.
+
+outputs/practice_area_summary.csv
+- Aggregated summary by practice area.
+- Useful for stakeholder reporting.
+
+outputs/status_summary.csv
+- Summary of matter count by status and priority.
+
+outputs/executive_metrics.json
+- Machine-readable KPI summary.
+- Good for dashboards or APIs later.
+
+outputs/executive_summary.txt
+- Human-readable summary for a business stakeholder.
+
+outputs/legal_intake.db
+- SQLite database containing cleaned and summary tables.
+- Lets you query the project with SQL.
+
+outputs/assignment_delay_model_metrics.json
+- Evaluation results for the ML model.
+- Includes accuracy, precision, recall, F1, and confusion matrix.
+
+outputs/assignment_delay_predictions.csv
+- Row-level predictions on the test set.
+- Lets you inspect model behavior.
+
+outputs/assignment_delay_feature_weights.csv
+- Feature importance proxy using logistic regression coefficients.
+- Helps explain what influenced predictions.
+
+outputs/assignment_delay_model.pkl
+- Saved trained model file.
+- Could be reused later for simple deployment experiments.
+
+==================================================
+5. How project1.py Works
+==================================================
+
+project1.py is the analytics and data engineering layer.
+
+Step 1: Set file paths
+- Defines where the raw data is stored.
+- Defines where outputs will be saved.
+
+Step 2: Load data
+- Reads the CSV file with pandas.
+
+Step 3: Clean data
+- Standardizes column names
+- Fixes inconsistent category labels
+- Converts dates and numeric fields
+- Fills missing values
+- Cleans text fields
+
+Step 4: Feature engineering
+- is_high_value
+- is_high_risk
+- summary_length
+- priority_flag
+- summary_topic
+- received_weekday
+- assignment_delay_flag
+
+Step 5: Build summaries
+- practice area summary
+- status summary
+- executive metrics
+
+Step 6: Save outputs
+- CSV files
+- JSON metrics
+- text summary
+- SQLite tables
+
+Important learning point:
+This script is about preparing data correctly before modeling anything.
+
+==================================================
+6. Important Features Created in project1.py
+==================================================
+
+priority_flag
+- Marks a matter as "priority" if it is high value or high risk.
+- This is a business rule, not a machine learning prediction.
+
+summary_topic
+- Rule-based topic tag created from keywords in the text summary.
+- Used as a simple example of NLP-style feature creation.
+
+received_weekday
+- Extracted from the received date.
+- Helpful as a categorical feature for later modeling.
+
+assignment_delay_flag
+- Label used for the ML task.
+- "on_time" means assigned in 3 days or fewer.
+- "delayed" means assigned in more than 3 days.
+
+==================================================
+7. How train_assignment_delay_model.py Works
+==================================================
+
+This file adds the machine learning part of the project.
+
+Goal
+- Predict whether a matter will be delayed.
+
+Why this is a good first ML task
+- easy to explain
+- tied to operations
+- related to staffing and process efficiency
+- better than a random demo prediction
+
+Step 1: Load cleaned data
+- Reuses cleaning logic from project1.py
+- Keeps the project consistent
+
+Step 2: Define features
+Numeric features:
+- estimated_value_usd
+- risk_score
+- summary_length
+
+Categorical features:
+- practice_area
+- intake_channel
+- requester_type
+- jurisdiction
+- assigned_team
+- summary_topic
+- received_weekday
+
+Step 3: Define the target
+- The target is assignment_delay_flag converted into 0/1 labels.
+
+Step 4: Split the data
+- Uses train_test_split
+- Keeps some rows for evaluation
+
+Step 5: Build preprocessing
+- numeric features: impute missing values, scale values
+- categorical features: impute missing values, one-hot encode values
+
+Step 6: Train the model
+- Uses logistic regression
+- This is a good baseline model because it is simple and explainable
+
+Step 7: Evaluate the model
+- accuracy
+- precision
+- recall
+- F1 score
+- confusion matrix
+
+Step 8: Save artifacts
+- metrics file
+- predictions file
+- feature weights file
+- model pickle file
+
+Important learning point:
+This file shows the standard ML workflow:
+data -> preprocessing -> model -> evaluation -> saved artifacts
+
+==================================================
+8. Why Logistic Regression Was Used
+==================================================
+
+Logistic regression is a strong beginner and business-friendly baseline because:
+- it is easy to explain
+- it works well for binary classification
+- it gives coefficients you can inspect
+- it is lighter than more complex models
+
+For interviews, say:
+"I started with a simple, interpretable baseline before considering more complex models."
+
+==================================================
+9. What the SQL File Does
+==================================================
+
+sql/report_queries.sql contains reporting queries for the SQLite database.
+
+This matters because:
+- many business teams still rely heavily on SQL
+- employers want Python + SQL together
+- it shows the project is not only notebook-style analysis
+
+Types of questions answered:
+- open matters by practice area
+- highest risk matters
+- stakeholder summary tables
+- priority matters by intake channel
+- delayed assignment rate by practice area
+
+==================================================
+10. What Each Output Means
+==================================================
+
+cleaned_legal_intake.csv
+- Final cleaned table used for reporting and modeling.
+
+practice_area_summary.csv
+- Aggregated metrics by practice area.
+
+status_summary.csv
+- Counts by status and priority flag.
+
+executive_metrics.json
+- Compact KPI summary in machine-readable format.
+
+executive_summary.txt
+- Plain English summary for leadership.
+
+legal_intake.db
+- SQLite database version of the cleaned and summary data.
+
+assignment_delay_model_metrics.json
+- ML evaluation summary.
+- Use this to discuss model performance.
+
+assignment_delay_predictions.csv
+- Test set prediction results.
+- Useful for reviewing false positives and false negatives.
+
+assignment_delay_feature_weights.csv
+- Shows which model features were strongest.
+- Positive coefficient means a stronger push toward "delayed".
+- Negative coefficient means a stronger push away from "delayed".
+
+assignment_delay_model.pkl
+- Saved model object for later reuse.
+
+==================================================
+11. How to Explain the Project in an Interview
+==================================================
+
+Use this structure:
+
+1. Problem
+   A business team needs better visibility into intake volume, risk, and response timing.
+
+2. Data challenge
+   The raw intake data is messy and inconsistent.
+
+3. Analytics solution
+   You built a Python pipeline that cleans data, engineers features, produces summary tables, and stores them in SQLite.
+
+4. ML extension
+   You trained a logistic regression model to predict delayed assignment using structured features.
+
+5. Output and value
+   The project produces reporting artifacts for stakeholders and technical artifacts for future deployment or dashboard work.
+
+6. Honest limitation
+   The current dataset is synthetic and small, so the model is a learning baseline, not a production system.
+
+==================================================
+12. Important Technical Concepts to Review
+==================================================
+
+Python concepts
+- functions
+- imports
+- file paths with pathlib
+- dictionaries and lists
+
+pandas concepts
+- DataFrame
+- read_csv
+- fillna
+- to_numeric
+- to_datetime
+- groupby
+- agg
+- sort_values
+- to_csv
+
+SQLite concepts
+- sqlite3 connection
+- to_sql
+- querying tables
+
+Machine learning concepts
+- target variable
+- features
+- train/test split
+- preprocessing
+- one-hot encoding
+- scaling
+- logistic regression
+- accuracy
+- precision
+- recall
+- F1 score
+- confusion matrix
+
+==================================================
+13. What to Improve Later
+==================================================
+
+Strong next upgrades:
+- add NLP classification using the summary text directly
+- add a dashboard in Streamlit, Tableau, or Power BI
+- add tests
+- add data validation checks
+- add a second model for comparison
+- use a larger and more realistic dataset
+
+==================================================
+14. Commands to Remember
+==================================================
+
+Set up environment:
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+Run analytics pipeline:
+python3 project1.py
+
+Run ML training:
+python3 train_assignment_delay_model.py
+
+Run SQL queries:
+sqlite3 outputs/legal_intake.db < sql/report_queries.sql
+
+==================================================
+15. Final Reminder
+==================================================
+
+Do not try to memorize every line of code.
+
+Make sure you understand:
+- the business problem
+- the data cleaning logic
+- the engineered features
+- the ML target
+- the output files
+- how to explain why the project matters
+
+If you can explain those clearly, you will sound much stronger than someone who only lists tool names.

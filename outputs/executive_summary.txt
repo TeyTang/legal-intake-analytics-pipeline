@@ -1,0 +1,9 @@
+Legal Intake Analytics Executive Summary
+Total matters analyzed: 12
+Priority matters identified: 9
+Open matters: 6
+Average risk score: 6.83
+Average days to assign: 3.42
+Top practice area by volume: Corporate
+High-value matters: 7
+Delayed assignments: 5

@@ -1,0 +1,13 @@
+matter_id,received_date,practice_area,intake_channel,requester_type,jurisdiction,summary,estimated_value_usd,risk_score,assigned_team,status,days_to_assign,received_weekday,is_high_value,is_high_risk,summary_length,priority_flag,assignment_delay_flag,summary_topic
+MAT-001,2026-01-03,Corporate,email,Internal Counsel,NY,Vendor agreement renewal for software licensing,180000.0,5.0,Commercial,open,2.0,Saturday,False,False,6,standard,on_time,contracts
+MAT-002,2026-01-04,Litigation,portal,Business Unit,CA,Complaint received regarding contract dispute,450000.0,8.0,Disputes,under_review,5.0,Sunday,True,True,5,priority,delayed,litigation
+MAT-003,2026-01-05,Employment,email,HR,TX,Employee termination review and severance package,95000.0,6.0,Employment,closed,3.0,Monday,False,False,6,standard,on_time,employment
+MAT-004,2026-01-06,Privacy,email,IT,DC,Potential data breach involving client files,750000.0,9.0,Cyber,open,1.0,Tuesday,True,True,6,priority,on_time,privacy
+MAT-005,2026-01-07,Corporate,portal,Finance,NY,Due diligence for acquisition target,1200000.0,7.0,Corporate,under_review,4.0,Wednesday,True,True,5,priority,delayed,general
+MAT-006,2026-01-08,Regulatory,email,Compliance,IL,Regulatory inquiry on records retention,310000.0,4.0,Regulatory,open,6.0,Thursday,True,False,5,priority,delayed,general
+MAT-007,2026-01-09,Corporate,portal,Operations,FL,Vendor contract and renewal negotiation,225000.0,7.0,Commercial,open,2.0,Friday,False,True,5,priority,on_time,contracts
+MAT-008,2026-01-10,Employment,email,Manager,CA,Harassment allegation review for employee complaint,110000.0,8.0,Employment,under_review,4.0,Saturday,False,True,6,priority,delayed,litigation
+MAT-009,2026-01-11,Litigation,email,General Counsel,NJ,Insurance coverage dispute and claim response,375000.0,7.0,Disputes,open,7.0,Sunday,True,True,6,priority,delayed,litigation
+MAT-010,2026-01-12,Privacy,portal,Security,WA,Cyber incident triage and privacy notification analysis,640000.0,10.0,Cyber,open,1.0,Monday,True,True,7,priority,on_time,privacy
+MAT-011,2026-01-13,Corporate,email,Sales,MA,Master services agreement update for new client,210000.0,5.0,Commercial,closed,3.0,Tuesday,False,False,7,standard,on_time,contracts
+MAT-012,2026-01-14,Regulatory,portal,Compliance,DC,Outside inquiry on billing controls and audit response,310000.0,6.0,Unknown,under_review,3.0,Wednesday,True,False,8,priority,on_time,general

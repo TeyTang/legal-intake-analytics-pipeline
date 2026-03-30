@@ -1,0 +1,5 @@
+matter_id,practice_area,jurisdiction,status,days_to_assign,assignment_delay_flag,summary_topic,actual_label,predicted_label,predicted_probability_delayed
+MAT-007,Corporate,FL,open,2.0,on_time,contracts,on_time,delayed,0.532
+MAT-012,Regulatory,DC,under_review,3.0,on_time,general,on_time,on_time,0.188
+MAT-002,Litigation,CA,under_review,5.0,delayed,litigation,delayed,delayed,0.825
+MAT-009,Litigation,NJ,open,7.0,delayed,litigation,delayed,on_time,0.499

@@ -1,0 +1,6 @@
+practice_area,matter_count,avg_estimated_value_usd,avg_risk_score,avg_days_to_assign,priority_matters
+Corporate,4,453750.0,6.0,2.75,2
+Privacy,2,695000.0,9.5,1.0,2
+Litigation,2,412500.0,7.5,6.0,2
+Regulatory,2,310000.0,5.0,4.5,2
+Employment,2,102500.0,7.0,3.5,1
