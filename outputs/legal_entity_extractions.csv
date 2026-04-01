@@ -1,0 +1,41 @@
+matter_id,practice_area,summary,entity_type,entity_value,matched_text,start_char,end_char
+MAT-001,Corporate,Vendor agreement renewal for software licensing,document_type,agreement,agreement,7,16
+MAT-001,Corporate,Vendor agreement renewal for software licensing,party_reference,vendor,Vendor,0,6
+MAT-001,Corporate,Vendor agreement renewal for software licensing,asset_reference,software licensing,software licensing,29,47
+MAT-001,Corporate,Vendor agreement renewal for software licensing,workflow_action,renewal,renewal,17,24
+MAT-002,Litigation,Complaint received regarding contract dispute,issue_type,contract dispute,contract dispute,29,45
+MAT-002,Litigation,Complaint received regarding contract dispute,document_type,complaint,Complaint,0,9
+MAT-003,Employment,Employee termination review and severance package,issue_type,termination,termination,9,20
+MAT-003,Employment,Employee termination review and severance package,issue_type,severance,severance,32,41
+MAT-003,Employment,Employee termination review and severance package,document_type,package,package,42,49
+MAT-003,Employment,Employee termination review and severance package,party_reference,employee,Employee,0,8
+MAT-003,Employment,Employee termination review and severance package,workflow_action,review,review,21,27
+MAT-004,Privacy,Potential data breach involving client files,issue_type,data breach,data breach,10,21
+MAT-004,Privacy,Potential data breach involving client files,party_reference,client,client,32,38
+MAT-005,Corporate,Due diligence for acquisition target,issue_type,due diligence,Due diligence,0,13
+MAT-005,Corporate,Due diligence for acquisition target,issue_type,acquisition,acquisition,18,29
+MAT-006,Regulatory,Regulatory inquiry on records retention,issue_type,records retention,records retention,22,39
+MAT-006,Regulatory,Regulatory inquiry on records retention,document_type,inquiry,inquiry,11,18
+MAT-007,Corporate,Vendor contract and renewal negotiation,document_type,contract,contract,7,15
+MAT-007,Corporate,Vendor contract and renewal negotiation,party_reference,vendor,Vendor,0,6
+MAT-007,Corporate,Vendor contract and renewal negotiation,workflow_action,renewal,renewal,20,27
+MAT-007,Corporate,Vendor contract and renewal negotiation,workflow_action,negotiation,negotiation,28,39
+MAT-008,Employment,Harassment allegation review for employee complaint,issue_type,harassment,Harassment,0,10
+MAT-008,Employment,Harassment allegation review for employee complaint,document_type,complaint,complaint,42,51
+MAT-008,Employment,Harassment allegation review for employee complaint,party_reference,employee,employee,33,41
+MAT-008,Employment,Harassment allegation review for employee complaint,workflow_action,review,review,22,28
+MAT-009,Litigation,Insurance coverage dispute and claim response,issue_type,insurance coverage,Insurance coverage,0,18
+MAT-009,Litigation,Insurance coverage dispute and claim response,issue_type,dispute,dispute,19,26
+MAT-009,Litigation,Insurance coverage dispute and claim response,document_type,claim,claim,31,36
+MAT-009,Litigation,Insurance coverage dispute and claim response,document_type,response,response,37,45
+MAT-010,Privacy,Cyber incident triage and privacy notification analysis,issue_type,cyber incident,Cyber incident,0,14
+MAT-010,Privacy,Cyber incident triage and privacy notification analysis,issue_type,privacy notification,privacy notification,26,46
+MAT-010,Privacy,Cyber incident triage and privacy notification analysis,workflow_action,triage,triage,15,21
+MAT-010,Privacy,Cyber incident triage and privacy notification analysis,workflow_action,analysis,analysis,47,55
+MAT-011,Corporate,Master services agreement update for new client,document_type,master services agreement,Master services agreement,0,25
+MAT-011,Corporate,Master services agreement update for new client,party_reference,client,client,41,47
+MAT-011,Corporate,Master services agreement update for new client,workflow_action,update,update,26,32
+MAT-012,Regulatory,Outside inquiry on billing controls and audit response,issue_type,billing controls,billing controls,19,35
+MAT-012,Regulatory,Outside inquiry on billing controls and audit response,document_type,inquiry,inquiry,8,15
+MAT-012,Regulatory,Outside inquiry on billing controls and audit response,document_type,audit,audit,40,45
+MAT-012,Regulatory,Outside inquiry on billing controls and audit response,document_type,response,response,46,54

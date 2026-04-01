@@ -9,6 +9,7 @@ Business-oriented AI/ML portfolio project that simulates a law-firm intake workf
 - Generated stakeholder-facing KPI summaries and SQL-ready tables
 - Trained a logistic regression model to predict delayed assignment
 - Added an NLP text classifier that routes intake summaries to practice areas
+- Added a rule-based NLP entity extractor for issue, document, party, and action terms
 - Documented the workflow for both technical review and interview prep
 
 ## Why this project exists
@@ -35,6 +36,7 @@ This project shows how to:
 4. store clean tables in SQLite for SQL analysis
 5. train a simple model to forecast delayed assignment
 6. classify intake summaries into practice areas using NLP
+7. extract legal entities from intake summaries for downstream review and routing
 
 ## Architecture
 
@@ -46,7 +48,8 @@ Raw CSV
   -> ML preprocessing pipeline
   -> logistic regression delay prediction
   -> TF-IDF text vectorization + practice-area classification
-  -> saved metrics, predictions, and feature weights
+  -> rule-based legal entity extraction
+  -> saved metrics, predictions, summaries, and feature weights
 ```
 
 ## Tech Stack
@@ -93,6 +96,14 @@ Current NLP evaluation snapshot:
 
 The NLP metrics are also illustrative for the same reason: the dataset is small and synthetic.
 
+Current entity extraction snapshot:
+
+- Method: `rule-based phrase matching`
+- Matters with extracted entities: `12 / 12`
+- Total entity mentions: `40`
+- Average entities per matter: `3.33`
+- Entity types extracted: `issue_type`, `document_type`, `party_reference`, `asset_reference`, `workflow_action`
+
 ## Repository Structure
 
 ```text
@@ -103,6 +114,7 @@ The NLP metrics are also illustrative for the same reason: the dataset is small 
 ├── project1.py
 ├── train_assignment_delay_model.py
 ├── train_practice_area_text_classifier.py
+├── extract_legal_entities.py
 ├── requirements.txt
 ├── data/
 │   └── raw/
@@ -129,6 +141,7 @@ The NLP metrics are also illustrative for the same reason: the dataset is small 
 - `project1.py`: analytics pipeline for cleaning, feature engineering, summaries, and SQLite export
 - `train_assignment_delay_model.py`: ML training script for delayed-assignment prediction
 - `train_practice_area_text_classifier.py`: NLP text-classification script for routing summaries to practice areas
+- `extract_legal_entities.py`: rule-based NLP entity extraction for legal-summary terms
 - `sql/report_queries.sql`: SQL reporting queries against the generated SQLite database
 - `docs/project_walkthrough.md`: guided step-by-step explanation of the project
 - `Tech_Ref.txt`: study reference for reviewing the code later
@@ -143,6 +156,7 @@ pip install -r requirements.txt
 python3 project1.py
 python3 train_assignment_delay_model.py
 python3 train_practice_area_text_classifier.py
+python3 extract_legal_entities.py
 ```
 
 Optional SQL review:
@@ -169,6 +183,10 @@ Running the scripts generates:
 - `outputs/practice_area_text_predictions.csv`
 - `outputs/practice_area_top_terms.csv`
 - `outputs/practice_area_text_classifier.pkl`
+- `outputs/legal_entity_extractions.csv`
+- `outputs/legal_entity_record_view.csv`
+- `outputs/legal_entity_summary.csv`
+- `outputs/legal_entity_metrics.json`
 
 ## Skills Demonstrated
 
@@ -178,6 +196,7 @@ Running the scripts generates:
 - SQLite persistence and query support
 - Supervised learning with preprocessing pipelines
 - NLP text classification with TF-IDF features
+- Rule-based legal entity extraction from unstructured text
 - Basic model evaluation and prediction inspection
 - Technical documentation for portfolio presentation
 
@@ -190,7 +209,8 @@ In an interview, the strongest framing is:
 3. The analytics pipeline creates clean tables and stakeholder-ready outputs.
 4. The ML layer adds a simple operational forecast: whether assignment will be delayed.
 5. The NLP layer classifies intake summaries to support practice-area routing.
-6. The project is structured for future expansion into richer NLP and dashboards.
+6. The entity extraction layer pulls out issues, document types, parties, and workflow terms from legal summaries.
+7. The project is structured for future expansion into richer NLP and dashboards.
 
 ## Study and Reference Files
 
@@ -201,11 +221,11 @@ In an interview, the strongest framing is:
 
 ## Next Steps
 
-- Add entity extraction from intake summaries
 - Add a dashboard in Streamlit, Power BI, or Tableau
 - Add tests and stronger data validation
 - Compare the current baseline model with a tree-based model
 - Expand from TF-IDF to embeddings or transformer-based text models
+- Add semantic search or retrieval over legal summaries
 - Expand the dataset and improve evaluation rigor
 
 ## Notes

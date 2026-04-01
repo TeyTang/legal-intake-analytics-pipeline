@@ -26,6 +26,9 @@ The project has 2 main layers:
 3. NLP text classification
    This layer uses intake summary text to classify which practice area a matter belongs to.
 
+4. Rule-based entity extraction
+   This layer extracts structured legal terms from the summary text, such as issues, document types, parties, and actions.
+
 This is useful for learning because it covers:
 - Python
 - pandas
@@ -71,12 +74,17 @@ Study the project in this order:
 9. Run train_assignment_delay_model.py
 10. Read train_practice_area_text_classifier.py
 11. Run train_practice_area_text_classifier.py
-12. Inspect outputs/assignment_delay_model_metrics.json
-13. Inspect outputs/assignment_delay_predictions.csv
-14. Inspect outputs/assignment_delay_feature_weights.csv
-15. Inspect outputs/practice_area_text_metrics.json
-16. Inspect outputs/practice_area_text_predictions.csv
-17. Inspect outputs/practice_area_top_terms.csv
+12. Read extract_legal_entities.py
+13. Run extract_legal_entities.py
+14. Inspect outputs/assignment_delay_model_metrics.json
+15. Inspect outputs/assignment_delay_predictions.csv
+16. Inspect outputs/assignment_delay_feature_weights.csv
+17. Inspect outputs/practice_area_text_metrics.json
+18. Inspect outputs/practice_area_text_predictions.csv
+19. Inspect outputs/practice_area_top_terms.csv
+20. Inspect outputs/legal_entity_record_view.csv
+21. Inspect outputs/legal_entity_summary.csv
+22. Inspect outputs/legal_entity_metrics.json
 
 ==================================================
 4. File-by-File Reference
@@ -112,6 +120,12 @@ train_practice_area_text_classifier.py
 - Uses TF-IDF to convert text into numbers.
 - Uses logistic regression as the classifier.
 - Saves metrics, predictions, top terms, and a serialized model file.
+
+extract_legal_entities.py
+- Rule-based NLP entity extraction script.
+- Uses phrase matching on the summary text.
+- Extracts issue, document, party, asset, and workflow entities.
+- Saves row-level extractions, matter-level views, and summary metrics.
 
 requirements.txt
 - Lists Python packages needed for the project.
@@ -196,6 +210,18 @@ outputs/practice_area_top_terms.csv
 
 outputs/practice_area_text_classifier.pkl
 - Saved NLP classification model.
+
+outputs/legal_entity_extractions.csv
+- One row per extracted entity mention.
+
+outputs/legal_entity_record_view.csv
+- One row per matter with grouped extracted entities.
+
+outputs/legal_entity_summary.csv
+- Count of entity mentions by entity type and entity value.
+
+outputs/legal_entity_metrics.json
+- High-level summary of entity extraction coverage and counts.
 
 ==================================================
 5. How project1.py Works
@@ -371,6 +397,48 @@ Important learning point:
 This file shows how unstructured text becomes model-ready features.
 
 ==================================================
+8B. How extract_legal_entities.py Works
+==================================================
+
+This file adds a rule-based NLP workflow.
+
+Goal
+- Pull structured legal terms out of intake summaries.
+
+Why this is useful
+- legal work often starts with unstructured text
+- extracted entities can help routing, review, reporting, and later search
+- rule-based extraction is easy to explain and inspect
+
+Step 1: Load cleaned data
+- Reuses the same cleaning logic from project1.py
+
+Step 2: Define phrase patterns
+- The script contains phrase lists for:
+  issue_type
+  document_type
+  party_reference
+  asset_reference
+  workflow_action
+
+Step 3: Scan each summary
+- Searches for known phrases like `data breach`, `vendor`, `agreement`, or `review`
+
+Step 4: Save row-level extractions
+- One row per entity mention
+
+Step 5: Save matter-level grouped view
+- One row per matter with grouped entities by type
+
+Step 6: Save extraction summary metrics
+- Count of mentions
+- Entity type totals
+- Coverage across matters
+
+Important learning point:
+This file shows how you can turn free text into structured fields without training a heavy model.
+
+==================================================
 9. Why Logistic Regression Was Used
 ==================================================
 
@@ -523,11 +591,13 @@ Machine learning concepts
 NLP concepts
 - unstructured text
 - text classification
+- entity extraction
 - tokenization
 - TF-IDF
 - n-grams
 - vocabulary
 - class labels
+- rule-based matching
 
 ==================================================
 14. What to Improve Later
@@ -539,6 +609,7 @@ Strong next upgrades:
 - add data validation checks
 - add a second model for comparison
 - add embeddings or transformer-based NLP
+- add semantic search over summary text
 - use a larger and more realistic dataset
 
 ==================================================
@@ -558,6 +629,9 @@ python3 train_assignment_delay_model.py
 
 Run NLP training:
 python3 train_practice_area_text_classifier.py
+
+Run entity extraction:
+python3 extract_legal_entities.py
 
 Run SQL queries:
 sqlite3 outputs/legal_intake.db < sql/report_queries.sql

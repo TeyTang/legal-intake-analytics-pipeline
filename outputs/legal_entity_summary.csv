@@ -1,0 +1,33 @@
+entity_type,entity_value,mention_count
+document_type,complaint,2
+document_type,inquiry,2
+document_type,response,2
+party_reference,client,2
+party_reference,employee,2
+party_reference,vendor,2
+workflow_action,renewal,2
+workflow_action,review,2
+asset_reference,software licensing,1
+document_type,agreement,1
+document_type,audit,1
+document_type,claim,1
+document_type,contract,1
+document_type,master services agreement,1
+document_type,package,1
+issue_type,acquisition,1
+issue_type,billing controls,1
+issue_type,contract dispute,1
+issue_type,cyber incident,1
+issue_type,data breach,1
+issue_type,dispute,1
+issue_type,due diligence,1
+issue_type,harassment,1
+issue_type,insurance coverage,1
+issue_type,privacy notification,1
+issue_type,records retention,1
+issue_type,severance,1
+issue_type,termination,1
+workflow_action,analysis,1
+workflow_action,negotiation,1
+workflow_action,triage,1
+workflow_action,update,1

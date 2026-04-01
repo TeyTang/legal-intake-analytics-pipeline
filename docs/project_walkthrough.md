@@ -11,6 +11,7 @@ This is why the project has two layers:
 - an analytics pipeline for cleaning and reporting
 - a simple machine learning model for predicting delayed assignment
 - an NLP text classifier for routing intake summaries
+- an entity extraction workflow for pulling structured terms from summaries
 
 ## Step 2: Inspect the raw data
 
@@ -148,7 +149,39 @@ These files show:
 - which summaries were classified correctly or incorrectly
 - which terms were most associated with each class
 
-## Step 11: Learn what to say in an interview
+## Step 11: Run entity extraction
+
+Run:
+
+```bash
+python3 extract_legal_entities.py
+```
+
+This script:
+
+1. Uses the intake `summary` text
+2. Applies rule-based phrase matching
+3. Extracts issue, document, party, asset, and workflow terms
+4. Saves a row-level extraction table
+5. Saves a matter-level record view
+6. Saves an entity summary and extraction metrics
+
+## Step 12: Review the entity outputs
+
+After running the extractor, inspect:
+
+- `outputs/legal_entity_extractions.csv`
+- `outputs/legal_entity_record_view.csv`
+- `outputs/legal_entity_summary.csv`
+- `outputs/legal_entity_metrics.json`
+
+These files show:
+
+- which entities were found in each summary
+- which categories appear most often
+- how structured information can be derived from unstructured text
+
+## Step 13: Learn what to say in an interview
 
 When you describe this project, use this sequence:
 
@@ -157,12 +190,13 @@ When you describe this project, use this sequence:
 3. The cleaning and reporting pipeline
 4. The operational ML prediction
 5. The NLP routing workflow on intake summaries
-6. The SQL and stakeholder reporting outputs
-7. The next step: richer legal-text NLP
+6. The entity extraction workflow on intake summaries
+7. The SQL and stakeholder reporting outputs
+8. The next step: richer legal-text NLP
 
 That order sounds much stronger than just listing tools.
 
-## Step 12: Know the honest limitation
+## Step 14: Know the honest limitation
 
 This dataset is synthetic and small, so the metrics are not production-grade. That is fine.
 
@@ -181,5 +215,6 @@ What matters is that you can explain:
 3. Run the SQL queries and understand each one
 4. Run `train_assignment_delay_model.py`
 5. Run `train_practice_area_text_classifier.py`
-6. Read the model metrics, feature weights, and text predictions
-7. Practice explaining the full workflow out loud
+6. Run `extract_legal_entities.py`
+7. Read the model metrics, feature weights, text predictions, and entity outputs
+8. Practice explaining the full workflow out loud

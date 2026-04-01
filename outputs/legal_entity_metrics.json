@@ -1,0 +1,24 @@
+{
+  "total_matters": 12,
+  "matters_with_entities": 12,
+  "matters_without_entities": 0,
+  "total_entity_mentions": 40,
+  "unique_entity_values": 32,
+  "average_entities_per_matter": 3.33,
+  "entity_type_counts": {
+    "asset_reference": 1,
+    "document_type": 12,
+    "issue_type": 13,
+    "party_reference": 6,
+    "workflow_action": 8
+  },
+  "top_entity_values": {
+    "inquiry": 2,
+    "review": 2,
+    "vendor": 2,
+    "response": 2,
+    "client": 2
+  },
+  "method": "Rule-based phrase matching on intake summaries",
+  "note": "This is an explainable baseline entity extraction workflow for a small synthetic dataset."
+}
