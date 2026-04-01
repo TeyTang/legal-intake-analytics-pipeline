@@ -23,6 +23,9 @@ The project has 2 main layers:
 2. Machine learning baseline
    This layer trains a logistic regression model to predict whether a matter will be assigned late.
 
+3. NLP text classification
+   This layer uses intake summary text to classify which practice area a matter belongs to.
+
 This is useful for learning because it covers:
 - Python
 - pandas
@@ -66,9 +69,14 @@ Study the project in this order:
 7. Read sql/report_queries.sql
 8. Read train_assignment_delay_model.py
 9. Run train_assignment_delay_model.py
-10. Inspect outputs/assignment_delay_model_metrics.json
-11. Inspect outputs/assignment_delay_predictions.csv
-12. Inspect outputs/assignment_delay_feature_weights.csv
+10. Read train_practice_area_text_classifier.py
+11. Run train_practice_area_text_classifier.py
+12. Inspect outputs/assignment_delay_model_metrics.json
+13. Inspect outputs/assignment_delay_predictions.csv
+14. Inspect outputs/assignment_delay_feature_weights.csv
+15. Inspect outputs/practice_area_text_metrics.json
+16. Inspect outputs/practice_area_text_predictions.csv
+17. Inspect outputs/practice_area_top_terms.csv
 
 ==================================================
 4. File-by-File Reference
@@ -96,6 +104,14 @@ train_assignment_delay_model.py
 - Splits data into train and test sets.
 - Builds a preprocessing + logistic regression pipeline.
 - Saves model metrics, predictions, feature weights, and a serialized model file.
+
+train_practice_area_text_classifier.py
+- NLP text-classification script.
+- Uses the intake summary text as the main input.
+- Predicts which practice area a matter belongs to.
+- Uses TF-IDF to convert text into numbers.
+- Uses logistic regression as the classifier.
+- Saves metrics, predictions, top terms, and a serialized model file.
 
 requirements.txt
 - Lists Python packages needed for the project.
@@ -168,6 +184,18 @@ outputs/assignment_delay_feature_weights.csv
 outputs/assignment_delay_model.pkl
 - Saved trained model file.
 - Could be reused later for simple deployment experiments.
+
+outputs/practice_area_text_metrics.json
+- Evaluation summary for the NLP text classifier.
+
+outputs/practice_area_text_predictions.csv
+- Row-level NLP predictions for practice area classification.
+
+outputs/practice_area_top_terms.csv
+- Top TF-IDF terms associated with each practice area.
+
+outputs/practice_area_text_classifier.pkl
+- Saved NLP classification model.
 
 ==================================================
 5. How project1.py Works
@@ -300,7 +328,50 @@ This file shows the standard ML workflow:
 data -> preprocessing -> model -> evaluation -> saved artifacts
 
 ==================================================
-8. Why Logistic Regression Was Used
+8A. How train_practice_area_text_classifier.py Works
+==================================================
+
+This file adds the first direct NLP workflow.
+
+Goal
+- Predict the practice area from the intake summary text.
+
+Why this is a good first NLP task
+- legal teams often need document routing
+- the input is unstructured text
+- the output is a business label
+- it is easy to explain in an interview
+
+Step 1: Load cleaned data
+- Reuses the same cleaning logic from project1.py
+
+Step 2: Define the text input
+- Uses the `summary` column
+
+Step 3: Define the target
+- Uses `practice_area`
+
+Step 4: Convert text to numeric features
+- Uses TF-IDF
+- This measures which words and phrases are informative
+
+Step 5: Train the classifier
+- Uses logistic regression
+
+Step 6: Evaluate with cross-validation
+- Makes predictions on held-out folds
+
+Step 7: Save NLP artifacts
+- metrics
+- predictions
+- top terms
+- model file
+
+Important learning point:
+This file shows how unstructured text becomes model-ready features.
+
+==================================================
+9. Why Logistic Regression Was Used
 ==================================================
 
 Logistic regression is a strong beginner and business-friendly baseline because:
@@ -313,7 +384,7 @@ For interviews, say:
 "I started with a simple, interpretable baseline before considering more complex models."
 
 ==================================================
-9. What the SQL File Does
+10. What the SQL File Does
 ==================================================
 
 sql/report_queries.sql contains reporting queries for the SQLite database.
@@ -331,7 +402,7 @@ Types of questions answered:
 - delayed assignment rate by practice area
 
 ==================================================
-10. What Each Output Means
+11. What Each Output Means
 ==================================================
 
 cleaned_legal_intake.csv
@@ -368,8 +439,21 @@ assignment_delay_feature_weights.csv
 assignment_delay_model.pkl
 - Saved model object for later reuse.
 
+practice_area_text_metrics.json
+- NLP evaluation summary.
+- Includes cross-validation metrics and a classification report.
+
+practice_area_text_predictions.csv
+- Shows predicted practice area from summary text for each row.
+
+practice_area_top_terms.csv
+- Shows which terms most strongly signal each practice area.
+
+practice_area_text_classifier.pkl
+- Saved NLP model object.
+
 ==================================================
-11. How to Explain the Project in an Interview
+12. How to Explain the Project in an Interview
 ==================================================
 
 Use this structure:
@@ -386,14 +470,17 @@ Use this structure:
 4. ML extension
    You trained a logistic regression model to predict delayed assignment using structured features.
 
-5. Output and value
+5. NLP extension
+   You trained a text classifier on intake summaries to support practice-area routing.
+
+6. Output and value
    The project produces reporting artifacts for stakeholders and technical artifacts for future deployment or dashboard work.
 
-6. Honest limitation
+7. Honest limitation
    The current dataset is synthetic and small, so the model is a learning baseline, not a production system.
 
 ==================================================
-12. Important Technical Concepts to Review
+13. Important Technical Concepts to Review
 ==================================================
 
 Python concepts
@@ -422,6 +509,7 @@ Machine learning concepts
 - target variable
 - features
 - train/test split
+- cross-validation
 - preprocessing
 - one-hot encoding
 - scaling
@@ -432,20 +520,29 @@ Machine learning concepts
 - F1 score
 - confusion matrix
 
+NLP concepts
+- unstructured text
+- text classification
+- tokenization
+- TF-IDF
+- n-grams
+- vocabulary
+- class labels
+
 ==================================================
-13. What to Improve Later
+14. What to Improve Later
 ==================================================
 
 Strong next upgrades:
-- add NLP classification using the summary text directly
 - add a dashboard in Streamlit, Tableau, or Power BI
 - add tests
 - add data validation checks
 - add a second model for comparison
+- add embeddings or transformer-based NLP
 - use a larger and more realistic dataset
 
 ==================================================
-14. Commands to Remember
+15. Commands to Remember
 ==================================================
 
 Set up environment:
@@ -459,11 +556,14 @@ python3 project1.py
 Run ML training:
 python3 train_assignment_delay_model.py
 
+Run NLP training:
+python3 train_practice_area_text_classifier.py
+
 Run SQL queries:
 sqlite3 outputs/legal_intake.db < sql/report_queries.sql
 
 ==================================================
-15. Final Reminder
+16. Final Reminder
 ==================================================
 
 Do not try to memorize every line of code.

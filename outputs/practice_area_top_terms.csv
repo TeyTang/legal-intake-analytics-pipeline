@@ -1,0 +1,51 @@
+practice_area,rank,term,coefficient
+Corporate,1,vendor,0.2536
+Corporate,2,renewal,0.2536
+Corporate,3,agreement,0.2238
+Corporate,4,acquisition,0.1815
+Corporate,5,acquisition target,0.1815
+Corporate,6,diligence,0.1815
+Corporate,7,diligence acquisition,0.1815
+Corporate,8,target,0.1815
+Corporate,9,renewal negotiation,0.1594
+Corporate,10,contract renewal,0.1594
+Employment,1,review,0.4276
+Employment,2,employee,0.4276
+Employment,3,harassment,0.2517
+Employment,4,review employee,0.2517
+Employment,5,employee complaint,0.2517
+Employment,6,allegation review,0.2517
+Employment,7,harassment allegation,0.2517
+Employment,8,allegation,0.2517
+Employment,9,termination review,0.2462
+Employment,10,termination,0.2462
+Litigation,1,dispute,0.4372
+Litigation,2,contract dispute,0.2572
+Litigation,3,regarding contract,0.2572
+Litigation,4,received,0.2572
+Litigation,5,received regarding,0.2572
+Litigation,6,regarding,0.2572
+Litigation,7,complaint received,0.2572
+Litigation,8,coverage dispute,0.2519
+Litigation,9,insurance,0.2519
+Litigation,10,dispute claim,0.2519
+Privacy,1,involving,0.2259
+Privacy,2,client files,0.2259
+Privacy,3,potential,0.2259
+Privacy,4,potential data,0.2259
+Privacy,5,involving client,0.2259
+Privacy,6,breach,0.2259
+Privacy,7,files,0.2259
+Privacy,8,data breach,0.2259
+Privacy,9,breach involving,0.2259
+Privacy,10,data,0.2259
+Regulatory,1,inquiry,0.4348
+Regulatory,2,retention,0.2803
+Regulatory,3,inquiry records,0.2803
+Regulatory,4,records,0.2803
+Regulatory,5,records retention,0.2803
+Regulatory,6,regulatory,0.2803
+Regulatory,7,regulatory inquiry,0.2803
+Regulatory,8,billing controls,0.226
+Regulatory,9,outside inquiry,0.226
+Regulatory,10,inquiry billing,0.226

@@ -1,0 +1,13 @@
+matter_id,summary,practice_area,summary_topic,assigned_team,predicted_practice_area,prediction_confidence,predicted_correctly
+MAT-001,Vendor agreement renewal for software licensing,Corporate,contracts,Commercial,Corporate,0.252,True
+MAT-002,Complaint received regarding contract dispute,Litigation,litigation,Disputes,Corporate,0.233,False
+MAT-003,Employee termination review and severance package,Employment,employment,Employment,Employment,0.273,True
+MAT-004,Potential data breach involving client files,Privacy,privacy,Cyber,Corporate,0.22,False
+MAT-005,Due diligence for acquisition target,Corporate,general,Corporate,Corporate,0.22,True
+MAT-006,Regulatory inquiry on records retention,Regulatory,general,Regulatory,Regulatory,0.243,True
+MAT-007,Vendor contract and renewal negotiation,Corporate,contracts,Commercial,Litigation,0.248,False
+MAT-008,Harassment allegation review for employee complaint,Employment,litigation,Employment,Employment,0.274,True
+MAT-009,Insurance coverage dispute and claim response,Litigation,litigation,Disputes,Litigation,0.248,True
+MAT-010,Cyber incident triage and privacy notification analysis,Privacy,privacy,Cyber,Corporate,0.224,False
+MAT-011,Master services agreement update for new client,Corporate,contracts,Commercial,Corporate,0.25,True
+MAT-012,Outside inquiry on billing controls and audit response,Regulatory,general,Unknown,Regulatory,0.256,True

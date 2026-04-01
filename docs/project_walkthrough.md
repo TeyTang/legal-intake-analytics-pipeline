@@ -10,6 +10,7 @@ This is why the project has two layers:
 
 - an analytics pipeline for cleaning and reporting
 - a simple machine learning model for predicting delayed assignment
+- an NLP text classifier for routing intake summaries
 
 ## Step 2: Inspect the raw data
 
@@ -116,7 +117,38 @@ These files tell you:
 - which examples were predicted correctly or incorrectly
 - which features influenced the model the most
 
-## Step 9: Learn what to say in an interview
+## Step 9: Train the NLP baseline
+
+Run:
+
+```bash
+python3 train_practice_area_text_classifier.py
+```
+
+This script:
+
+1. Uses the intake `summary` text as the model input
+2. Uses `practice_area` as the target label
+3. Converts text into TF-IDF features
+4. Trains a logistic regression classifier
+5. Uses cross-validation to produce out-of-fold predictions
+6. Saves metrics, predictions, top terms, and the model file
+
+## Step 10: Review the NLP outputs
+
+After training, inspect:
+
+- `outputs/practice_area_text_metrics.json`
+- `outputs/practice_area_text_predictions.csv`
+- `outputs/practice_area_top_terms.csv`
+
+These files show:
+
+- how well summary text predicts the practice area
+- which summaries were classified correctly or incorrectly
+- which terms were most associated with each class
+
+## Step 11: Learn what to say in an interview
 
 When you describe this project, use this sequence:
 
@@ -124,12 +156,13 @@ When you describe this project, use this sequence:
 2. The messy data challenge
 3. The cleaning and reporting pipeline
 4. The operational ML prediction
-5. The SQL and stakeholder reporting outputs
-6. The next step: NLP on intake summaries
+5. The NLP routing workflow on intake summaries
+6. The SQL and stakeholder reporting outputs
+7. The next step: richer legal-text NLP
 
 That order sounds much stronger than just listing tools.
 
-## Step 10: Know the honest limitation
+## Step 12: Know the honest limitation
 
 This dataset is synthetic and small, so the metrics are not production-grade. That is fine.
 
@@ -147,5 +180,6 @@ What matters is that you can explain:
 2. Read `project1.py` from top to bottom
 3. Run the SQL queries and understand each one
 4. Run `train_assignment_delay_model.py`
-5. Read the model metrics and feature weights
-6. Practice explaining the full workflow out loud
+5. Run `train_practice_area_text_classifier.py`
+6. Read the model metrics, feature weights, and text predictions
+7. Practice explaining the full workflow out loud
