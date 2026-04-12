@@ -29,6 +29,12 @@ The project has 2 main layers:
 4. Rule-based entity extraction
    This layer extracts structured legal terms from the summary text, such as issues, document types, parties, and actions.
 
+5. Semantic summary search
+   This layer lets you search intake summaries by similarity using a lightweight latent semantic method.
+
+6. Dashboard layer
+   This layer presents the project outputs visually using Streamlit.
+
 This is useful for learning because it covers:
 - Python
 - pandas
@@ -76,15 +82,21 @@ Study the project in this order:
 11. Run train_practice_area_text_classifier.py
 12. Read extract_legal_entities.py
 13. Run extract_legal_entities.py
-14. Inspect outputs/assignment_delay_model_metrics.json
-15. Inspect outputs/assignment_delay_predictions.csv
-16. Inspect outputs/assignment_delay_feature_weights.csv
-17. Inspect outputs/practice_area_text_metrics.json
-18. Inspect outputs/practice_area_text_predictions.csv
-19. Inspect outputs/practice_area_top_terms.csv
-20. Inspect outputs/legal_entity_record_view.csv
-21. Inspect outputs/legal_entity_summary.csv
-22. Inspect outputs/legal_entity_metrics.json
+14. Read semantic_summary_search.py
+15. Run semantic_summary_search.py
+16. Read dashboard.py
+17. Run the dashboard
+18. Inspect outputs/assignment_delay_model_metrics.json
+19. Inspect outputs/assignment_delay_predictions.csv
+20. Inspect outputs/assignment_delay_feature_weights.csv
+21. Inspect outputs/practice_area_text_metrics.json
+22. Inspect outputs/practice_area_text_predictions.csv
+23. Inspect outputs/practice_area_top_terms.csv
+24. Inspect outputs/legal_entity_record_view.csv
+25. Inspect outputs/legal_entity_summary.csv
+26. Inspect outputs/legal_entity_metrics.json
+27. Inspect outputs/summary_search_demo_results.csv
+28. Inspect outputs/summary_search_metrics.json
 
 ==================================================
 4. File-by-File Reference
@@ -127,9 +139,20 @@ extract_legal_entities.py
 - Extracts issue, document, party, asset, and workflow entities.
 - Saves row-level extractions, matter-level views, and summary metrics.
 
+semantic_summary_search.py
+- Search script for intake summaries.
+- Uses TF-IDF plus TruncatedSVD.
+- Returns similar summaries for a query.
+- Saves demo search results and search metadata.
+
+dashboard.py
+- Streamlit dashboard app.
+- Presents KPIs, charts, ML metrics, NLP outputs, and search results.
+- Makes the project easier to demo visually.
+
 requirements.txt
 - Lists Python packages needed for the project.
-- Currently includes pandas and scikit-learn.
+- Currently includes pandas, scikit-learn, and Streamlit.
 
 .gitignore
 - Prevents local environment files and generated artifacts from cluttering the repo.
@@ -222,6 +245,12 @@ outputs/legal_entity_summary.csv
 
 outputs/legal_entity_metrics.json
 - High-level summary of entity extraction coverage and counts.
+
+outputs/summary_search_demo_results.csv
+- Saved example search results for sample queries.
+
+outputs/summary_search_metrics.json
+- Search metadata such as method, vocabulary size, and demo queries.
 
 ==================================================
 5. How project1.py Works
@@ -439,6 +468,58 @@ Important learning point:
 This file shows how you can turn free text into structured fields without training a heavy model.
 
 ==================================================
+8C. How semantic_summary_search.py Works
+==================================================
+
+This file adds a lightweight retrieval workflow.
+
+Goal
+- Return the most similar intake summaries for a user query.
+
+Why this is useful
+- legal teams often want to find similar matters quickly
+- search is a practical bridge between analytics and LLM-style retrieval
+- this is a good baseline before embeddings
+
+Step 1: Load cleaned data
+- Reuses the cleaned dataset and summary text
+
+Step 2: Build text features
+- Uses TF-IDF on the summary text plus a small amount of derived context
+
+Step 3: Reduce into latent semantic space
+- Uses TruncatedSVD to capture broader similarity patterns
+
+Step 4: Score query similarity
+- Uses cosine similarity between the query and each summary
+
+Step 5: Save demo outputs
+- Stores example query results and search metadata
+
+Important learning point:
+This file shows how search can be built on top of a small text corpus without a large model.
+
+==================================================
+8D. How dashboard.py Works
+==================================================
+
+This file adds a visual interface.
+
+Goal
+- Give a stakeholder or hiring manager a quick way to review the project outputs.
+
+What it shows
+- executive metrics
+- practice area and status charts
+- ML metrics and prediction tables
+- NLP classification outputs
+- entity extraction summaries
+- interactive summary search
+
+Important learning point:
+This file turns the project from code artifacts into something closer to a demo.
+
+==================================================
 9. Why Logistic Regression Was Used
 ==================================================
 
@@ -598,18 +679,27 @@ NLP concepts
 - vocabulary
 - class labels
 - rule-based matching
+- cosine similarity
+- latent semantic analysis
+
+Dashboard concepts
+- Streamlit layout
+- metrics
+- charts
+- data tables
+- interactive controls
 
 ==================================================
 14. What to Improve Later
 ==================================================
 
 Strong next upgrades:
-- add a dashboard in Streamlit, Tableau, or Power BI
 - add tests
 - add data validation checks
 - add a second model for comparison
 - add embeddings or transformer-based NLP
 - add semantic search over summary text
+- add dashboard filters and screenshots
 - use a larger and more realistic dataset
 
 ==================================================
@@ -632,6 +722,12 @@ python3 train_practice_area_text_classifier.py
 
 Run entity extraction:
 python3 extract_legal_entities.py
+
+Run summary search:
+python3 semantic_summary_search.py --query "data breach client files"
+
+Run dashboard:
+streamlit run dashboard.py
 
 Run SQL queries:
 sqlite3 outputs/legal_intake.db < sql/report_queries.sql

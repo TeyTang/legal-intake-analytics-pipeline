@@ -10,6 +10,8 @@ Business-oriented AI/ML portfolio project that simulates a law-firm intake workf
 - Trained a logistic regression model to predict delayed assignment
 - Added an NLP text classifier that routes intake summaries to practice areas
 - Added a rule-based NLP entity extractor for issue, document, party, and action terms
+- Added latent semantic search over intake summaries
+- Added a small Streamlit dashboard for visual review of the project outputs
 - Documented the workflow for both technical review and interview prep
 
 ## Why this project exists
@@ -37,6 +39,8 @@ This project shows how to:
 5. train a simple model to forecast delayed assignment
 6. classify intake summaries into practice areas using NLP
 7. extract legal entities from intake summaries for downstream review and routing
+8. search intake summaries by semantic similarity
+9. present the outputs in a lightweight dashboard
 
 ## Architecture
 
@@ -49,6 +53,8 @@ Raw CSV
   -> logistic regression delay prediction
   -> TF-IDF text vectorization + practice-area classification
   -> rule-based legal entity extraction
+  -> latent semantic summary search
+  -> Streamlit dashboard
   -> saved metrics, predictions, summaries, and feature weights
 ```
 
@@ -58,6 +64,7 @@ Raw CSV
 - pandas
 - SQLite / SQL
 - scikit-learn
+- Streamlit
 - pathlib
 - JSON / CSV artifacts
 
@@ -104,6 +111,13 @@ Current entity extraction snapshot:
 - Average entities per matter: `3.33`
 - Entity types extracted: `issue_type`, `document_type`, `party_reference`, `asset_reference`, `workflow_action`
 
+Current search snapshot:
+
+- Method: `Latent semantic search using TF-IDF + TruncatedSVD`
+- Rows indexed: `12`
+- Vocabulary size: `125`
+- Demo queries saved: `4`
+
 ## Repository Structure
 
 ```text
@@ -115,6 +129,8 @@ Current entity extraction snapshot:
 ├── train_assignment_delay_model.py
 ├── train_practice_area_text_classifier.py
 ├── extract_legal_entities.py
+├── semantic_summary_search.py
+├── dashboard.py
 ├── requirements.txt
 ├── data/
 │   └── raw/
@@ -142,6 +158,8 @@ Current entity extraction snapshot:
 - `train_assignment_delay_model.py`: ML training script for delayed-assignment prediction
 - `train_practice_area_text_classifier.py`: NLP text-classification script for routing summaries to practice areas
 - `extract_legal_entities.py`: rule-based NLP entity extraction for legal-summary terms
+- `semantic_summary_search.py`: latent semantic search baseline for querying intake summaries
+- `dashboard.py`: Streamlit app for exploring project KPIs, NLP outputs, and search results
 - `sql/report_queries.sql`: SQL reporting queries against the generated SQLite database
 - `docs/project_walkthrough.md`: guided step-by-step explanation of the project
 - `Tech_Ref.txt`: study reference for reviewing the code later
@@ -157,6 +175,8 @@ python3 project1.py
 python3 train_assignment_delay_model.py
 python3 train_practice_area_text_classifier.py
 python3 extract_legal_entities.py
+python3 semantic_summary_search.py --query "data breach client files"
+streamlit run dashboard.py
 ```
 
 Optional SQL review:
@@ -187,6 +207,8 @@ Running the scripts generates:
 - `outputs/legal_entity_record_view.csv`
 - `outputs/legal_entity_summary.csv`
 - `outputs/legal_entity_metrics.json`
+- `outputs/summary_search_demo_results.csv`
+- `outputs/summary_search_metrics.json`
 
 ## Skills Demonstrated
 
@@ -197,6 +219,8 @@ Running the scripts generates:
 - Supervised learning with preprocessing pipelines
 - NLP text classification with TF-IDF features
 - Rule-based legal entity extraction from unstructured text
+- Latent semantic search for text retrieval
+- Streamlit dashboard construction
 - Basic model evaluation and prediction inspection
 - Technical documentation for portfolio presentation
 
@@ -210,7 +234,9 @@ In an interview, the strongest framing is:
 4. The ML layer adds a simple operational forecast: whether assignment will be delayed.
 5. The NLP layer classifies intake summaries to support practice-area routing.
 6. The entity extraction layer pulls out issues, document types, parties, and workflow terms from legal summaries.
-7. The project is structured for future expansion into richer NLP and dashboards.
+7. The search layer lets a user retrieve similar intake summaries by meaning.
+8. The dashboard turns the project into something a stakeholder can scan visually.
+9. The project is structured for future expansion into richer NLP and dashboards.
 
 ## Study and Reference Files
 
@@ -221,11 +247,11 @@ In an interview, the strongest framing is:
 
 ## Next Steps
 
-- Add a dashboard in Streamlit, Power BI, or Tableau
 - Add tests and stronger data validation
 - Compare the current baseline model with a tree-based model
 - Expand from TF-IDF to embeddings or transformer-based text models
-- Add semantic search or retrieval over legal summaries
+- Add filters and screenshots to the dashboard
+- Add semantic search with embeddings
 - Expand the dataset and improve evaluation rigor
 
 ## Notes

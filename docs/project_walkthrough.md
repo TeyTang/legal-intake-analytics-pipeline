@@ -12,6 +12,8 @@ This is why the project has two layers:
 - a simple machine learning model for predicting delayed assignment
 - an NLP text classifier for routing intake summaries
 - an entity extraction workflow for pulling structured terms from summaries
+- a semantic search workflow for retrieving similar summaries
+- a lightweight dashboard for reviewing everything visually
 
 ## Step 2: Inspect the raw data
 
@@ -181,7 +183,52 @@ These files show:
 - which categories appear most often
 - how structured information can be derived from unstructured text
 
-## Step 13: Learn what to say in an interview
+## Step 13: Run semantic search
+
+Run:
+
+```bash
+python3 semantic_summary_search.py --query "data breach client files"
+```
+
+This script:
+
+1. Reuses the cleaned summary text
+2. Builds a TF-IDF representation
+3. Projects it into a small latent semantic space with TruncatedSVD
+4. Scores similarity between the query and each matter summary
+5. Saves demo search results and search metadata
+
+## Step 14: Review the search outputs
+
+After running the search script, inspect:
+
+- `outputs/summary_search_demo_results.csv`
+- `outputs/summary_search_metrics.json`
+
+These files show:
+
+- which summaries are most similar to each example query
+- what search method was used
+- how a lightweight retrieval workflow can sit on top of the intake corpus
+
+## Step 15: Run the dashboard
+
+Run:
+
+```bash
+streamlit run dashboard.py
+```
+
+The dashboard brings together:
+
+- executive KPIs
+- tabular analytics outputs
+- ML and NLP metrics
+- entity extraction outputs
+- interactive summary search
+
+## Step 16: Learn what to say in an interview
 
 When you describe this project, use this sequence:
 
@@ -191,12 +238,13 @@ When you describe this project, use this sequence:
 4. The operational ML prediction
 5. The NLP routing workflow on intake summaries
 6. The entity extraction workflow on intake summaries
-7. The SQL and stakeholder reporting outputs
-8. The next step: richer legal-text NLP
+7. The semantic search workflow over intake summaries
+8. The SQL and dashboard reporting outputs
+9. The next step: richer legal-text NLP
 
 That order sounds much stronger than just listing tools.
 
-## Step 14: Know the honest limitation
+## Step 17: Know the honest limitation
 
 This dataset is synthetic and small, so the metrics are not production-grade. That is fine.
 
@@ -216,5 +264,7 @@ What matters is that you can explain:
 4. Run `train_assignment_delay_model.py`
 5. Run `train_practice_area_text_classifier.py`
 6. Run `extract_legal_entities.py`
-7. Read the model metrics, feature weights, text predictions, and entity outputs
-8. Practice explaining the full workflow out loud
+7. Run `semantic_summary_search.py`
+8. Open the dashboard with `streamlit run dashboard.py`
+9. Read the model metrics, feature weights, text predictions, entity outputs, and search results
+10. Practice explaining the full workflow out loud

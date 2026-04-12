@@ -1,0 +1,13 @@
+query,rank,similarity_score,matter_id,practice_area,summary,summary_topic,assigned_team,priority_flag,status,risk_score
+vendor contract renewal,1,0.997,MAT-007,Corporate,Vendor contract and renewal negotiation,contracts,Commercial,priority,open,7.0
+vendor contract renewal,2,0.985,MAT-001,Corporate,Vendor agreement renewal for software licensing,contracts,Commercial,standard,open,5.0
+vendor contract renewal,3,0.958,MAT-011,Corporate,Master services agreement update for new client,contracts,Commercial,standard,closed,5.0
+employee complaint review,1,1.0,MAT-008,Employment,Harassment allegation review for employee complaint,litigation,Employment,priority,under_review,8.0
+employee complaint review,2,0.999,MAT-012,Regulatory,Outside inquiry on billing controls and audit response,general,Unknown,priority,under_review,6.0
+employee complaint review,3,0.999,MAT-003,Employment,Employee termination review and severance package,employment,Employment,standard,closed,6.0
+data breach client files,1,0.998,MAT-004,Privacy,Potential data breach involving client files,privacy,Cyber,priority,open,9.0
+data breach client files,2,0.993,MAT-010,Privacy,Cyber incident triage and privacy notification analysis,privacy,Cyber,priority,open,10.0
+data breach client files,3,0.25,MAT-011,Corporate,Master services agreement update for new client,contracts,Commercial,standard,closed,5.0
+billing audit inquiry,1,1.0,MAT-012,Regulatory,Outside inquiry on billing controls and audit response,general,Unknown,priority,under_review,6.0
+billing audit inquiry,2,1.0,MAT-006,Regulatory,Regulatory inquiry on records retention,general,Regulatory,priority,open,4.0
+billing audit inquiry,3,1.0,MAT-005,Corporate,Due diligence for acquisition target,general,Corporate,priority,under_review,7.0

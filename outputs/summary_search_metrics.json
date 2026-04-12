@@ -1,0 +1,14 @@
+{
+  "rows_indexed": 12,
+  "vectorizer_vocabulary_size": 125,
+  "search_method": "Latent semantic search using TF-IDF + TruncatedSVD",
+  "latent_components": 3,
+  "demo_queries": [
+    "vendor contract renewal",
+    "employee complaint review",
+    "data breach client files",
+    "billing audit inquiry"
+  ],
+  "top_k_per_query": 3,
+  "note": "This is a lightweight semantic-style search baseline for a small synthetic legal-intake corpus."
+}
